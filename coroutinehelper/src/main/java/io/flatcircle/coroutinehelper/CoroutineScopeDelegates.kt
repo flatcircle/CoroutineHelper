@@ -9,12 +9,6 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by jacquessmuts on 2019-04-30
- * TODO: Add a class header comment!
- */
-
-
-/**
- * Created by jacquessmuts on 2019-04-10
  * delegate classes to be used by anything that implements CoroutineScope
  */
 
