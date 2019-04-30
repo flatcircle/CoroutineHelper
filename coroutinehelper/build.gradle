@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+publish {
+    userOrg = 'flatcircle'
+    groupId = 'io.flatcircle'
+    repoName = 'CoroutineHelper'
+    artifactId = 'coroutinehelper'
+    publishVersion = '0.0.1'
+    bintrayUser = 'chesterflatcircle'
+    bintrayKey = System.getenv("BINTRAY_KEY")
+    desc = 'A list of small kotlin extension functions, utility functions and delegates for Coroutines'
+    website = 'https://github.com/flatcircle/coroutinehelper'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
+    testImplementation 'junit:junit:4.12'
+}
