@@ -38,20 +38,20 @@ suspend fun callFlattened() {
 
 suspend fun callFlattenedGeneric() {
 
-    val result = flattenCallback(::functionWithCallback,"hello")
+    val result = flattenCircle(::functionWithCallback,"hello")
 
-    val resultTwo = flattenCallback(::functionWithCallbackTwo, "hello", "sir")
+    val resultTwo = flattenCircle(::functionWithCallbackTwo, "hello", "sir")
 }
 
-suspend fun <Input1, Input2, Output> flattenCallback(function: (Input1, Input2, (Output) -> Unit) -> Unit,
-                                                     inputOne: Input1, inputTwo: Input2) =  suspendCoroutine<Output> { continuation ->
+suspend fun <Input1, Input2, Output> flattenCircle(function: (Input1, Input2, (Output) -> Unit) -> Unit,
+                                                   inputOne: Input1, inputTwo: Input2) =  suspendCoroutine<Output> { continuation ->
     function(inputOne, inputTwo) { output ->
         continuation.resume(output)
     }
 }
 
-suspend fun <Input, Output> flattenCallback(function: (Input, (Output) -> Unit) -> Unit,
-                                            input: Input) =  suspendCoroutine<Output> { continuation ->
+suspend fun <Input, Output> flattenCircle(function: (Input, (Output) -> Unit) -> Unit,
+                                          input: Input) =  suspendCoroutine<Output> { continuation ->
     function(input) { output ->
         continuation.resume(output)
     }
@@ -65,20 +65,20 @@ suspend fun callFlattenedInfix() {
     }
 
     // Using Function
-    val resultFunction = flattenCallback(::functionWithCallback, "hello")
+    val resultFunction = flattenCircle(::functionWithCallback, "hello")
     println(resultFunction)
 
     // Using infix notation
-    val resultInfix = ::functionWithCallback flattenedWith "hello"
+    val resultInfix = ::functionWithCallback flatCircledWith "hello"
     println(resultInfix)
 
-    val resultTwo = ::functionWithCallbackTwo flattenedWith Pair("hello", "sir")
+    val resultTwo = ::functionWithCallbackTwo flatCircledWith Pair("hello", "sir")
 }
 
-private suspend infix fun <Input1, Input2, Output> ((Input1, Input2, (Output) -> Unit) -> Unit).flattenedWith(pair: Pair<Input1, Input2>): Output {
-    return flattenCallback(this, pair.first, pair.second)
+private suspend infix fun <Input, Output> ((Input, (Output) -> Unit) -> Unit).flatCircledWith(input: Input): Output {
+    return flattenCircle(this, input)
 }
 
-private suspend infix fun <Input, Output> ((Input, (Output) -> Unit) -> Unit).flattenedWith(input: Input): Output {
-    return flattenCallback(this, input)
+private suspend infix fun <Input1, Input2, Output> ((Input1, Input2, (Output) -> Unit) -> Unit).flatCircledWith(pair: Pair<Input1, Input2>): Output {
+    return flattenCircle(this, pair.first, pair.second)
 }
