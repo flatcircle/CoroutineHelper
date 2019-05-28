@@ -69,14 +69,12 @@ class MainActivity : AppCompatActivity() {
 
     suspend fun longRunningOperation(input: Int): ApiResult<Int> {
         delay(5000)
-        val value = Random.nextInt(0,input*2)
+        val value = Random.nextInt(0, input*2)
 
         return if (value > input) {
             Success(value)
         } else {
             Failure(SocketTimeoutException("This could be any exception. Faking an api timeout here."))
         }
-
     }
-
 }
