@@ -9,22 +9,31 @@ import kotlin.coroutines.suspendCoroutine
  */
 
 // Region One Output
-suspend fun <Input, Output> suspendAsync(function: (Input, (Output) -> Unit) -> Unit,
-                                         input: Input) =  suspendCoroutine<Output> { continuation ->
+suspend fun <Input, Output> suspendAsync(
+    function: (Input, (Output) -> Unit) -> Unit,
+    input: Input
+) = suspendCoroutine<Output> { continuation ->
     function(input) { output ->
         continuation.resume(output)
     }
 }
 
-suspend fun <Input1, Input2, Output> suspendAsync(function: (Input1, Input2, (Output) -> Unit) -> Unit,
-                                                  input1: Input1, input2: Input2) =  suspendCoroutine<Output> { continuation ->
+suspend fun <Input1, Input2, Output> suspendAsync(
+    function: (Input1, Input2, (Output) -> Unit) -> Unit,
+    input1: Input1,
+    input2: Input2
+) = suspendCoroutine<Output> { continuation ->
     function(input1, input2) { output ->
         continuation.resume(output)
     }
 }
 
-suspend fun <Input1, Input2, Input3, Output> suspendAsync(function: (Input1, Input2, Input3, (Output) -> Unit) -> Unit,
-                                                  input1: Input1, input2: Input2, input3: Input3) =  suspendCoroutine<Output> { continuation ->
+suspend fun <Input1, Input2, Input3, Output> suspendAsync(
+    function: (Input1, Input2, Input3, (Output) -> Unit) -> Unit,
+    input1: Input1,
+    input2: Input2,
+    input3: Input3
+) = suspendCoroutine<Output> { continuation ->
     function(input1, input2, input3) { output ->
         continuation.resume(output)
     }
@@ -44,22 +53,31 @@ private suspend infix fun <Input1, Input2, Input3, Output> ((Input1, Input2, Inp
 
 // Region Two Output
 
-suspend fun <Input, Output1, Output2> suspendAsyncPairResult(function: (Input, (Output1, Output2) -> Unit) -> Unit,
-                                                       input: Input) =  suspendCoroutine<Pair<Output1, Output2>> { continuation ->
+suspend fun <Input, Output1, Output2> suspendAsyncPairResult(
+    function: (Input, (Output1, Output2) -> Unit) -> Unit,
+    input: Input
+) = suspendCoroutine<Pair<Output1, Output2>> { continuation ->
     function(input) { output1, output2 ->
         continuation.resume(Pair(output1, output2))
     }
 }
 
-suspend fun <Input1, Input2, Output1, Output2> suspendAsyncPairResult(function: (Input1, Input2, (Output1, Output2) -> Unit) -> Unit,
-                                                                      inputOne: Input1, inputTwo: Input2) =  suspendCoroutine<Pair<Output1, Output2>> { continuation ->
+suspend fun <Input1, Input2, Output1, Output2> suspendAsyncPairResult(
+    function: (Input1, Input2, (Output1, Output2) -> Unit) -> Unit,
+    inputOne: Input1,
+    inputTwo: Input2
+) = suspendCoroutine<Pair<Output1, Output2>> { continuation ->
     function(inputOne, inputTwo) { output1, output2 ->
         continuation.resume(Pair(output1, output2))
     }
 }
 
-suspend fun <Input1, Input2, Input3, Output1, Output2> suspendAsyncPairResult(function: (Input1, Input2, Input3, (Output1, Output2) -> Unit) -> Unit,
-                                                                      input1: Input1, input2: Input2, input3: Input3) =  suspendCoroutine<Pair<Output1, Output2>> { continuation ->
+suspend fun <Input1, Input2, Input3, Output1, Output2> suspendAsyncPairResult(
+    function: (Input1, Input2, Input3, (Output1, Output2) -> Unit) -> Unit,
+    input1: Input1,
+    input2: Input2,
+    input3: Input3
+) = suspendCoroutine<Pair<Output1, Output2>> { continuation ->
     function(input1, input2, input3) { output1, output2 ->
         continuation.resume(Pair(output1, output2))
     }
@@ -79,23 +97,32 @@ private suspend infix fun <Input1, Input2, Input3, Output1, Output2> ((Input1, I
 
 // Region Three Output
 
-suspend fun <Input, Output1, Output2, Output3> suspendAsyncTripleResult(function: (Input, (Output1, Output2, Output3) -> Unit) -> Unit,
-                                                             input: Input) =  suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
+suspend fun <Input, Output1, Output2, Output3> suspendAsyncTripleResult(
+    function: (Input, (Output1, Output2, Output3) -> Unit) -> Unit,
+    input: Input
+) = suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
     function(input) { output1, output2, output3 ->
         continuation.resume(Triple(output1, output2, output3))
     }
 }
 
-suspend fun <Input1, Input2, Output1, Output2, Output3> suspendAsyncTripleResult(function: (Input1, Input2, (Output1, Output2, Output3) -> Unit) -> Unit,
-                                                                      inputOne: Input1, inputTwo: Input2) =  suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
+suspend fun <Input1, Input2, Output1, Output2, Output3> suspendAsyncTripleResult(
+    function: (Input1, Input2, (Output1, Output2, Output3) -> Unit) -> Unit,
+    inputOne: Input1,
+    inputTwo: Input2
+) = suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
     function(inputOne, inputTwo) { output1, output2, output3 ->
         continuation.resume(Triple(output1, output2, output3))
     }
 }
 
-suspend fun <Input1, Input2, Input3, Output1, Output2, Output3> suspendAsyncTripleResult(function: (Input1, Input2, Input3, (Output1, Output2, Output3) -> Unit) -> Unit,
-                                                                              input1: Input1, input2: Input2, input3: Input3) =  suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
-    function(input1, input2, input3) {output1, output2, output3 ->
+suspend fun <Input1, Input2, Input3, Output1, Output2, Output3> suspendAsyncTripleResult(
+    function: (Input1, Input2, Input3, (Output1, Output2, Output3) -> Unit) -> Unit,
+    input1: Input1,
+    input2: Input2,
+    input3: Input3
+) = suspendCoroutine<Triple<Output1, Output2, Output3>> { continuation ->
+    function(input1, input2, input3) { output1, output2, output3 ->
         continuation.resume(Triple(output1, output2, output3))
     }
 }

@@ -19,6 +19,39 @@ jobs:
           key: gradle-{{ checksum "build.gradle" }}
           destination: reports
 
+  ktlint:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3g
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run ktlint
+          command: ./gradlew ktlint
+
+  tests:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3g
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run Tests
+          command: ./gradlew testDebugUnitTest -x lint
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_test_results:
+          path: app/build/test-results
+
   deploy:
     working_directory: ~/code
     docker:
@@ -38,10 +71,17 @@ workflows:
   build-and-deploy:
     jobs:
       - prepare
+      - ktlint:
+          requires:
+            - prepare
+      - tests:
+          requires:
+            - prepare
       - hold:
           type: approval
           requires:
-            - prepare
+            - ktlint
+            - tests
           filters:
             branches:
               only:
